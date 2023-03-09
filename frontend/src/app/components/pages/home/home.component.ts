@@ -21,12 +21,13 @@ export class HomeComponent implements OnInit{
         foodsObservable = this.foodService.getAllFoodsByTagMethod(params.tag)
       else
      foodsObservable = foodService.getAll()
-    })
-   foodsObservable= foodService.getAll();
 
-   foodsObservable.subscribe((serverFoods)=>{
+      foodsObservable.subscribe((serverFoods)=>{
     this.foods = serverFoods
    })
+    })
+
+
   }
 
   ngOnInit(): void {
