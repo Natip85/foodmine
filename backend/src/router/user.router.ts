@@ -5,7 +5,8 @@ import asyncHandler from 'express-async-handler'
 import { User, UserModel } from "../models/user.model"
 import bcrypt from 'bcryptjs';
 
-const router = Router()
+
+const router = Router();
 
 router.get("/seed", asyncHandler(
   async (req, res)=>{
@@ -20,15 +21,14 @@ router.get("/seed", asyncHandler(
 ))
 
 router.post("/login", asyncHandler(async(req, res)=>{
-  const {email, password} = req.body
-  const user = await UserModel.findOne({email, password})
-  if(user){
+  const {email, password} = req.body;
+  const user = await UserModel.findOne({email})
+  if(user && (await bcrypt.compare(password, user.password))){
     res.send(generateTokenResponse(user))
   }else{
     res.status(400).send("Username or password is not valid")
   }
 }))
-
 
 router.post('/register', asyncHandler(
   async (req, res) => {
@@ -58,7 +58,7 @@ router.post('/register', asyncHandler(
 
 const generateTokenResponse = (user:User)=>{
   const token = jwt.sign({
-    email: user.email, isAdmin: user.isAdmin
+    id: user.id, email: user.email, isAdmin: user.isAdmin
   }, process.env.JWT_SECRET!, {
     expiresIn: '30d'
   })

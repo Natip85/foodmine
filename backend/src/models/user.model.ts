@@ -5,7 +5,7 @@ export interface User{
   email:string;
   name:string;
   address:string;
-  password: String;
+  password: string;
   isAdmin:boolean;
 }
 

@@ -36,7 +36,7 @@ submit(){
   this.isSubmitted = true
   if(this.registerForm.invalid) return
 
-  const fv=this.registerForm.value
+  const fv = this.registerForm.value
 
   const user: IUserRegister = {
     name: fv.name,
